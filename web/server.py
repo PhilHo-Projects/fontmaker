@@ -220,6 +220,9 @@ class Handler(BaseHTTPRequestHandler):
         try:
             with os.fdopen(fd, 'wb') as fh:
                 fh.write(body)
+            # mkstemp gives 0600, which on a bind-mounted host directory means
+            # nobody outside the container can read what was uploaded.
+            os.chmod(tmp, 0o644)
             os.replace(tmp, dest)
         except OSError as exc:
             if os.path.exists(tmp):
