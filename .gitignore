@@ -1,0 +1,26 @@
+# FontForge itself, if you vendor it here. ~120 MB; install it instead.
+/fontforge/
+
+# Build artefacts
+/output/
+/build/
+*.pyc
+__pycache__/
+
+# web/fonts/ is committed on purpose - it is what the dropdown starts with.
+# Running the server locally writes uploads there too, so they show up as
+# untracked: commit the ones worth keeping, delete the rest.
+
+# Superseded by web/ - delete it whenever you like.
+/specimen/
+
+# Tooling scratch
+/.playwright-mcp/
+/.claude/settings.local.json
+spec-top.png
+spec-bot.png
+spec2.png
+
+# OS
+Thumbs.db
+.DS_Store

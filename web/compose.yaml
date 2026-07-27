@@ -1,0 +1,12 @@
+services:
+  specimen:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Uploaded fonts survive a redeploy; the bundled ones live in the image.
+      - specimen-fonts:/data/fonts
+
+volumes:
+  specimen-fonts:
