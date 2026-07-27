@@ -144,9 +144,16 @@ The image is `python:3.12-alpine` plus four files. Uploads go to `/data/fonts`,
 which is the only writable path and the only thing worth putting on a volume;
 fonts baked into the image stay visible underneath it.
 
-Behind Coolify: point it at `web/`, use the Dockerfile, expose port 8000, and
-add a persistent volume at `/data/fonts`. Pass `--read-only` in the command to
-serve the page without accepting uploads.
+Behind Coolify: point it at this repo, build pack **Dockerfile**, base
+directory `/web`, Dockerfile `/Dockerfile`, expose port **8000**, and add a
+persistent storage mapping to `/data/fonts`. Uploads then land on the host and
+survive a redeploy, and you can drop `.ttf` files straight into that directory
+over SSH to add them to the dropdown.
+
+Add `--read-only` to the command to serve the page without accepting uploads.
+Leave it off and **anyone who can reach the URL can write files to that
+directory** — bounded by an 8 MB per-file cap and a 250-file ceiling, but
+still worth deciding on deliberately.
 
 ---
 

@@ -213,3 +213,24 @@ and the filename is sanitised. `app.js` parses `head`/`hhea`/`OS/2`/`name`/
 The page is a tool, not a landing page: dense panels, tiny functional labels,
 no hero, no descriptive copy, no decorative whitespace. Keep additions in that
 register.
+
+## Deployment (this repo's own instance)
+
+Live at **https://fontmaker.philippeho.dev** — Coolify app
+`k8dsmh7rz92ggnus56ew69r5` on the Hetzner box, Dockerfile build pack, base
+directory `/web`, port 8000, host directory
+`/home/phil/app-data/fontmaker/fonts` mounted at `/data/fonts`.
+
+**Releases are manual — there is no webhook, so a push does not deploy.**
+After pushing:
+
+```powershell
+. C:\Users\phili\.config\coolify\env.ps1
+$h = @{ Authorization = "Bearer $env:COOLIFY_TOKEN" }
+Invoke-RestMethod -Uri "$env:COOLIFY_URL/api/v1/deploy?uuid=k8dsmh7rz92ggnus56ew69r5" -Headers $h -Method Post
+```
+
+Uploaded fonts live on the host, not in the image, so they survive a redeploy
+and can be added or removed over SSH. The Coolify persistent-storage API wants
+`type: "persistent"` — `volume`, `bind` and `directory` are all rejected, and
+the endpoint is absent from the published OpenAPI spec.
