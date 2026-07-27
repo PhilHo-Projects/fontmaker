@@ -74,15 +74,33 @@ html, body {
 #bar input[type="range"] { width: 96px; accent-color: var(--accent); }
 #bar output { width: 3ch; text-align: right; color: var(--ink); }
 
-#bar nav a {
+/* The four views, sectioned off from the controls by a rule on each side so
+   it reads as navigation rather than as one more knob. */
+#bar .pages {
+  display: flex;
+  gap: 1px;
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid var(--line);
+}
+
+#bar .pages a {
   color: var(--dim);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
   white-space: nowrap;
+  padding: 4px 9px;
+  height: 24px;
+  line-height: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
 }
-#bar nav a:hover, #bar nav a[aria-current] {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+
+#bar .pages a:hover { color: var(--ink); }
+
+#bar .pages a[aria-current] {
+  color: #14140f;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 #status { color: var(--dim); margin-left: auto; white-space: nowrap; }

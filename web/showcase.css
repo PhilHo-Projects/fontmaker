@@ -2,21 +2,6 @@
    real context rather than against the tool's chrome. The loaded font is
    applied to everything inside .demo - that is the whole point. */
 
-#bar .tabs { display: flex; gap: 1px; }
-
-#bar .tabs button {
-  font: inherit;
-  color: var(--dim);
-  background: var(--panel);
-  border: 1px solid var(--line);
-  padding: 3px 9px;
-  height: 24px;
-  cursor: pointer;
-}
-
-#bar .tabs button:hover { color: var(--ink); }
-#bar .tabs button.on { color: #14140f; background: var(--accent); border-color: var(--accent); }
-
 #stage { background: var(--line); }
 .demo { display: none; font-family: Specimen, Georgia, serif; }
 #stage[data-demo="blog"] .demo-blog,

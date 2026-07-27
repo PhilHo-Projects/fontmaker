@@ -14,13 +14,13 @@
   <select id="font" title="Font"></select>
   <button id="download" type="button" title="Download this font">↓ ttf</button>
   <label class="file">upload<input id="upload" type="file" accept=".ttf,.otf" multiple hidden></label>
-  <span class="tabs">
-    <button type="button" data-demo="blog" class="on">blog</button>
-    <button type="button" data-demo="brutal">buttons</button>
-    <button type="button" data-demo="dash">dashboard</button>
-  </span>
   <label class="rng">base<input id="base" type="range" min="12" max="24" value="17"><output id="baseout">17</output></label>
-  <nav><a href="index.html">←&nbsp;specimen</a></nav>
+  <nav class="pages">
+    <a href="index.html">specimen</a>
+    <a href="showcase.html#blog" data-demo="blog">blog</a>
+    <a href="showcase.html#brutal" data-demo="brutal">buttons</a>
+    <a href="showcase.html#dash" data-demo="dash">dashboard</a>
+  </nav>
   <span id="status"></span>
 </header>
 

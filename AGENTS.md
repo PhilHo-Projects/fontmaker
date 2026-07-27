@@ -225,6 +225,10 @@ so it follows you between them.
   static markup toggled by `data-demo` on `#stage`, so there is no templating
   to reason about. Keep them to one screen each.
 
+All four views appear in one nav on both pages. Which demo is showing lives in
+the URL hash (`showcase.html#blog|#brutal|#dash`), so each is linkable and the
+back button works; switching does not reload, so the font stays loaded.
+
 ## Deployment (this repo's own instance)
 
 Live at **https://fontmaker.philippeho.dev** — Coolify app

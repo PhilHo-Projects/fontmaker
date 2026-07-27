@@ -1,30 +1,36 @@
 /* Showcase page. The demos are static markup in showcase.html; all this does
- * is switch between them, scale the base size, and keep the choice across
- * reloads. Font loading lives in fontkit.js. */
+ * is switch between them and scale the base size. Font loading lives in
+ * fontkit.js.
+ *
+ * Which demo is showing is held in the URL hash rather than in a variable, so
+ * each one is linkable from the nav on either page and the back button works.
+ */
 
 const $ = (s) => document.querySelector(s);
 const stage = $("#stage");
+const DEMOS = ["blog", "brutal", "dash"];
+
+function fromHash() {
+  const h = location.hash.replace(/^#/, "");
+  return DEMOS.includes(h) ? h : DEMOS[0];
+}
 
 function setDemo(name) {
   stage.dataset.demo = name;
-  document.querySelectorAll("#bar .tabs button").forEach((b) =>
-    b.classList.toggle("on", b.dataset.demo === name));
-  try { localStorage.setItem("fm-demo", name); } catch (e) { /* private mode */ }
+  document.querySelectorAll("#bar .pages a").forEach((a) => {
+    if (a.dataset.demo === name) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
 }
 
-document.querySelectorAll("#bar .tabs button").forEach((b) =>
-  b.addEventListener("click", () => setDemo(b.dataset.demo)));
+window.addEventListener("hashchange", () => setDemo(fromHash()));
+setDemo(fromHash());
 
 $("#base").addEventListener("input", () => {
   const v = $("#base").value;
   $("#baseout").value = v;
   stage.style.setProperty("--base", v + "px");
 });
-
-try {
-  const saved = localStorage.getItem("fm-demo");
-  if (saved) setDemo(saved);
-} catch (e) { /* private mode */ }
 
 $("#baseout").value = $("#base").value;
 stage.style.setProperty("--base", $("#base").value + "px");
