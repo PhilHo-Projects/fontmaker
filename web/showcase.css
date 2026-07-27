@@ -149,9 +149,9 @@
 
 .demo-brutal * { border-color: var(--ink); }
 
-.br-head { max-width: 60ch; margin-bottom: 26px; }
+.br-head { margin-bottom: 26px; }
 .demo-brutal h1 { font-size: 2.6em; margin: 0 0 8px; line-height: 1.05; }
-.br-head p { margin: 0; font-size: 1.02em; }
+.br-head p { margin: 0; font-size: 1.02em; max-width: 60ch; }
 
 .br-block { margin-bottom: 26px; }
 
