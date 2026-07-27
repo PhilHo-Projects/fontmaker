@@ -25,6 +25,10 @@ from urllib.parse import urlparse, parse_qs, unquote
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 MAX_UPLOAD = 8 * 1024 * 1024
+# Uploads are open to whoever can reach the page, so the directory needs a
+# ceiling as well as a per-file one. Replacing an existing name is always
+# allowed; only growing past this is refused.
+MAX_UPLOADS = 250
 SAFE_NAME = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._ -]{0,79}$')
 FONT_EXT = ('.ttf', '.otf')
 # sfnt magic: TrueType, Apple TrueType, CFF/OpenType, TrueType collection
@@ -206,6 +210,12 @@ class Handler(BaseHTTPRequestHandler):
 
         os.makedirs(Config.uploads, exist_ok=True)
         dest = os.path.join(Config.uploads, name)
+        if not os.path.exists(dest):
+            held = sum(1 for f in os.listdir(Config.uploads)
+                       if f.lower().endswith(FONT_EXT))
+            if held >= MAX_UPLOADS:
+                return self.send_json(507, {
+                    'error': 'upload directory is full (%d)' % MAX_UPLOADS})
         fd, tmp = tempfile.mkstemp(dir=Config.uploads, suffix='.part')
         try:
             with os.fdopen(fd, 'wb') as fh:

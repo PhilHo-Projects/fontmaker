@@ -118,6 +118,25 @@ class ServerTests(unittest.TestCase):
                 get(self.base + path)
             self.assertEqual(e.exception.code, 404, path)
 
+    def test_a_full_upload_directory_refuses_new_names_but_allows_replacing(self):
+        original = fm.MAX_UPLOADS
+        fm.MAX_UPLOADS = 2
+        try:
+            post(self.base + "/api/fonts?name=Cap1.ttf", FAKE_TTF)
+            post(self.base + "/api/fonts?name=Cap2.ttf", FAKE_TTF)
+            with self.assertRaises(urllib.error.HTTPError) as e:
+                post(self.base + "/api/fonts?name=Cap3.ttf", FAKE_TTF)
+            self.assertEqual(e.exception.code, 507)
+            # replacing something already there is still fine
+            self.assertEqual(
+                post(self.base + "/api/fonts?name=Cap1.ttf", FAKE_TTF).status, 201)
+        finally:
+            fm.MAX_UPLOADS = original
+            for n in ("Cap1.ttf", "Cap2.ttf"):
+                p = os.path.join(self.uploads, n)
+                if os.path.exists(p):
+                    os.unlink(p)
+
     def test_read_only_mode_refuses_uploads(self):
         fm.Config.read_only = True
         try:
