@@ -206,13 +206,24 @@ python web/server.py --port 8000
 ```
 
 `GET /api/fonts` lists, `POST /api/fonts?name=X.ttf` takes raw bytes,
-`GET /fonts/X.ttf` serves. Uploads are validated on sfnt magic, capped at 8 MB,
-and the filename is sanitised. `app.js` parses `head`/`hhea`/`OS/2`/`name`/
-`cmap` itself so the readouts come from the file.
+`GET /fonts/X.ttf` serves. Uploads are validated on sfnt magic, capped at 8 MB
+and 250 files, and the filename must be a bare name. Static assets are matched
+by shape (`^[A-Za-z0-9_-]+\.(html|js|css|svg|ico|png)$`) so nothing else beside
+`server.py` is reachable.
 
-The page is a tool, not a landing page: dense panels, tiny functional labels,
-no hero, no descriptive copy, no decorative whitespace. Keep additions in that
-register.
+Two pages, sharing `fontkit.js` — the font list, `FontFace` loading, the sfnt
+parser, upload and drag-drop. The active font is remembered in `localStorage`,
+so it follows you between them.
+
+- `index.html` + `app.js` — the specimen tool. Dense panels, tiny functional
+  labels, no hero, no descriptive copy, no decorative whitespace. Readouts come
+  from parsing `head`/`hhea`/`OS/2`/`name`/`cmap`, not from CSS. **Keep
+  additions in that register.**
+- `showcase.html` + `showcase.css`/`showcase.js` — the same font in three
+  realistic contexts (blog, neo-brutalist component sheet, dashboard). These
+  *are* meant to look designed; each commits to its own palette. Demos are
+  static markup toggled by `data-demo` on `#stage`, so there is no templating
+  to reason about. Keep them to one screen each.
 
 ## Deployment (this repo's own instance)
 

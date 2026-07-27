@@ -60,12 +60,21 @@ class ServerTests(unittest.TestCase):
         shutil.rmtree(cls.tmp, ignore_errors=True)
 
     # -- serving ---------------------------------------------------------
-    def test_page_and_assets_are_served(self):
+    def test_pages_and_assets_are_served(self):
         html = get(self.base + "/").read().decode()
         self.assertIn("app.js", html)
         self.assertIn("style.css", html)
-        self.assertIn("text/javascript",
-                      get(self.base + "/app.js").headers["Content-Type"])
+        self.assertIn("showcase.html", html)
+        for asset in ("app.js", "fontkit.js", "showcase.js"):
+            self.assertIn("text/javascript",
+                          get(self.base + "/" + asset).headers["Content-Type"])
+        self.assertIn("demo-blog", get(self.base + "/showcase.html").read().decode())
+
+    def test_source_next_to_the_page_is_not_served(self):
+        for path in ("/server.py", "/../server.py", "/web/server.py"):
+            with self.assertRaises(urllib.error.HTTPError, msg=path) as e:
+                get(self.base + path)
+            self.assertEqual(e.exception.code, 404, path)
 
     def test_listing_reports_the_bundled_fonts(self):
         data = json.loads(get(self.base + "/api/fonts").read())

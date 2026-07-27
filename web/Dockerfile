@@ -3,7 +3,8 @@
 FROM python:3.12-alpine
 
 WORKDIR /app
-COPY server.py index.html app.js style.css ./
+COPY server.py index.html showcase.html ./
+COPY fontkit.js app.js showcase.js style.css showcase.css ./
 COPY fonts/ ./fonts/
 
 # Uploads land in a separate directory so a volume mounted there cannot hide

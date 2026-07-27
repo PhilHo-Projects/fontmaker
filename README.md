@@ -129,7 +129,19 @@ python web/server.py
 
 Standard library only — no npm, no build step, no framework. Pick a font from
 the dropdown, or drop a `.ttf` anywhere on the page to upload it. The metrics
-and glyph coverage shown are parsed out of the file itself, not guessed.
+and glyph coverage shown are parsed out of the file itself, not guessed, and
+`↓ ttf` downloads whatever is loaded.
+
+Two pages:
+
+- **specimen** — waterfall, character rows, paragraphs at reading sizes, kern
+  pairs, the full glyph table, and the metrics the file actually declares.
+- **in use** — the same font in three realistic contexts: a text-heavy blog, a
+  neo-brutalist component sheet (buttons, forms, tags, cards, table), and a
+  dashboard. Judging a face in a paragraph and in a button are different
+  questions and both are worth asking.
+
+The font you pick follows you between them.
 
 Opened straight off disk (`file://web/index.html`) it still works, minus the
 server-side font list: dropped fonts preview from memory.

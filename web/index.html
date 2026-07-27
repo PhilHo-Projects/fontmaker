@@ -11,11 +11,13 @@
 
 <header id="bar">
   <select id="font" title="Font"></select>
+  <button id="download" type="button" title="Download this font">↓ ttf</button>
   <label class="file">upload<input id="upload" type="file" accept=".ttf,.otf" multiple hidden></label>
   <input id="text" type="text" spellcheck="false" autocomplete="off"
          value="Handgloves quartz 38" title="Sample text">
   <label class="rng">size<input id="size" type="range" min="8" max="220" value="96"><output id="sizeout">96</output></label>
   <label class="rng">track<input id="track" type="range" min="-60" max="120" value="0"><output id="trackout">0</output></label>
+  <nav><a href="showcase.html">in&nbsp;use&nbsp;→</a></nav>
   <button id="theme" type="button" title="Light / dark">◐</button>
   <span id="status"></span>
 </header>
@@ -24,6 +26,7 @@
 
 <div id="drop">drop .ttf</div>
 
+<script src="fontkit.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

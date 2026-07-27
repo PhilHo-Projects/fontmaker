@@ -74,6 +74,17 @@ html, body {
 #bar input[type="range"] { width: 96px; accent-color: var(--accent); }
 #bar output { width: 3ch; text-align: right; color: var(--ink); }
 
+#bar nav a {
+  color: var(--dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  white-space: nowrap;
+}
+#bar nav a:hover, #bar nav a[aria-current] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 #status { color: var(--dim); margin-left: auto; white-space: nowrap; }
 #status.err { color: #e0665a; }
 
@@ -104,11 +115,6 @@ html, body {
   text-transform: uppercase;
   pointer-events: none;
 }
-
-.p.inv { background: var(--ink); color: var(--bg); }
-.p.inv > .l { color: var(--bg); opacity: .6; }
-.p.tint { background: var(--accent); color: #14140f; }
-.p.tint > .l { color: #14140f; opacity: .65; }
 
 .c6 { grid-column: span 6; }
 .c4 { grid-column: span 4; }

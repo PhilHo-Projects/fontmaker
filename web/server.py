@@ -34,10 +34,10 @@ FONT_EXT = ('.ttf', '.otf')
 # sfnt magic: TrueType, Apple TrueType, CFF/OpenType, TrueType collection
 FONT_MAGIC = (b'\x00\x01\x00\x00', b'true', b'OTTO', b'ttcf')
 
-# Only these are served as static assets. An allowlist rather than "any file
-# in this directory", so dropping a note or a key next to server.py cannot
-# publish it.
-STATIC = ('index.html', 'app.js', 'style.css', 'favicon.ico')
+# Static assets are matched by shape, not listed by name: a bare filename in
+# this directory with one of these extensions. Anything else - server.py, a
+# stray note, a key someone dropped alongside it - is not reachable.
+STATIC = re.compile(r'^[A-Za-z0-9_-]+\.(html|js|css|svg|ico|png)$')
 
 TYPES = {
     '.html': 'text/html; charset=utf-8',
@@ -126,12 +126,16 @@ class Handler(BaseHTTPRequestHandler):
 
     def drain(self, n, chunk=65536):
         """Read and discard n bytes, so a rejected request still gets its
-        response instead of a reset connection."""
-        while n > 0:
-            got = self.rfile.read(min(chunk, n))
-            if not got:
-                break
-            n -= len(got)
+        response instead of a reset connection. A client that gives up
+        mid-send is fine - we are throwing the bytes away regardless."""
+        try:
+            while n > 0:
+                got = self.rfile.read(min(chunk, n))
+                if not got:
+                    break
+                n -= len(got)
+        except OSError:
+            pass
 
     def send_file(self, path, cache='no-cache'):
         try:
@@ -165,7 +169,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.send_file(os.path.join(HERE, 'index.html'))
 
         name = posixpath.basename(path)
-        if name in STATIC and path == '/' + name:
+        if path == '/' + name and STATIC.match(name):
             local = os.path.join(HERE, name)
             if os.path.isfile(local):
                 return self.send_file(local)

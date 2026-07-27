@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>fontmaker — in use</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='14' font-family='serif'>A</text></svg>">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="showcase.css">
+</head>
+<body>
+
+<header id="bar">
+  <select id="font" title="Font"></select>
+  <button id="download" type="button" title="Download this font">↓ ttf</button>
+  <label class="file">upload<input id="upload" type="file" accept=".ttf,.otf" multiple hidden></label>
+  <span class="tabs">
+    <button type="button" data-demo="blog" class="on">blog</button>
+    <button type="button" data-demo="brutal">buttons</button>
+    <button type="button" data-demo="dash">dashboard</button>
+  </span>
+  <label class="rng">base<input id="base" type="range" min="12" max="24" value="17"><output id="baseout">17</output></label>
+  <nav><a href="index.html">←&nbsp;specimen</a></nav>
+  <span id="status"></span>
+</header>
+
+<main id="stage" data-demo="blog">
+
+<!-- ------------------------------------------------------------ blog -->
+<section class="demo demo-blog">
+  <header class="bl-top">
+    <span class="bl-name">The Measure</span>
+    <nav><a href="#">Essays</a><a href="#">Notes</a><a href="#">Archive</a><a href="#">About</a></nav>
+  </header>
+
+  <article>
+    <p class="bl-kicker">Craft · Issue 14</p>
+    <h1>What a paragraph knows that a logo never will</h1>
+    <p class="bl-by">By <a href="#">Ada Whitmore</a> · 27 July 2026 · 9 min</p>
+
+    <p class="bl-lead">A typeface shows its hand slowly. You can admire a
+    letterform in isolation for an afternoon and still have no idea whether it
+    can hold a page together at eleven pixels on a tired screen.</p>
+
+    <p>The test is boring on purpose. Set four hundred words, stand back far
+    enough that the words stop being words, and look at the grey. It should be
+    even. No word should sit darker than its neighbours, no line should sag,
+    and the spaces between words should be quieter than the spaces between
+    lines. If the page flickers, something is wrong — usually the spacing, and
+    only rarely the drawing.</p>
+
+    <h2>Rhythm before beauty</h2>
+
+    <p>Stems make the rhythm. In <em>minimum</em> the eye reads the beat of the
+    verticals before it reads the letters, and if one gap is wider than the
+    rest the whole word stumbles. This is why spacing is drawn, not typed: a
+    round letter needs less room than a flat one because its extreme is a
+    single tangent point rather than a whole edge, and a diagonal needs less
+    again because its serifs should interlock with what comes next.</p>
+
+    <blockquote>
+      <p>Type is a beautiful group of letters, not a group of beautiful
+      letters.</p>
+      <cite>— Matthew Carter</cite>
+    </blockquote>
+
+    <p>Which is a way of saying that the letters you fuss over — the
+    <strong>ampersand</strong>, the swash, the clever <em>g</em> — are the ones
+    that matter least. Nobody reads an ampersand. They read <code>the</code>
+    and <code>of</code> and <code>and</code>, several thousand times, and those
+    are made of the letters nobody sketches on a Sunday.</p>
+
+    <h3>Three things to check first</h3>
+
+    <ol>
+      <li>The <strong>x-height</strong> against the cap height. Too small and
+        the page turns grey and distant; too large and the ascenders lose the
+        word shapes that make skimming possible.</li>
+      <li>The <strong>apertures</strong> of <em>c</em>, <em>e</em> and
+        <em>s</em>. When they close up, the letters start to look like
+        <em>o</em> at small sizes and reading slows.</li>
+      <li>The <strong>numerals</strong>, which everyone forgets until the first
+        table: 0123456789 in a price, a date, a phone number.</li>
+    </ol>
+
+    <p>None of this is visible in a specimen poster, which is the point. A
+    display face is judged in a second; a text face is judged over an hour, and
+    the reader never consciously notices either the success or the failure —
+    only whether they got to the end.</p>
+
+    <figure>
+      <p class="bl-big">Handgloves &amp; quartz</p>
+      <figcaption>The same face at display size. Flattering, and almost
+      useless as evidence.</figcaption>
+    </figure>
+
+    <p>So: set the paragraph. Squint. If the grey is even and nothing jumps,
+    the face works, and everything else is preference. <a href="#">Read the
+    next essay →</a></p>
+  </article>
+
+  <footer class="bl-foot">
+    <span>The Measure — a journal about reading</span>
+    <span>RSS · Newsletter · Contact</span>
+  </footer>
+</section>
+
+<!-- ---------------------------------------------------------- brutal -->
+<section class="demo demo-brutal">
+  <div class="br-head">
+    <h1>Component Sheet</h1>
+    <p>Every control in one place, so the face has to survive a label, a
+      button and a table in the same eyeful.</p>
+  </div>
+
+  <div class="br-block">
+    <span class="br-label">Buttons</span>
+    <div class="br-row">
+      <button class="br-btn br-yellow">Primary action</button>
+      <button class="br-btn br-pink">Secondary</button>
+      <button class="br-btn br-cyan">Tertiary</button>
+      <button class="br-btn">Plain</button>
+      <button class="br-btn br-ghost">Ghost</button>
+      <button class="br-btn" disabled>Disabled</button>
+    </div>
+    <div class="br-row">
+      <button class="br-btn br-sm br-yellow">Small</button>
+      <button class="br-btn br-lg br-pink">Large button</button>
+      <a class="br-btn br-link br-cyan" href="#">Link styled as button →</a>
+    </div>
+  </div>
+
+  <div class="br-block">
+    <span class="br-label">Form</span>
+    <div class="br-form">
+      <label>Font name
+        <input type="text" value="Gravitas Text" spellcheck="false"></label>
+      <label>Classification
+        <select>
+          <option>Transitional serif</option>
+          <option>Grotesque</option>
+          <option>Slab</option>
+        </select></label>
+      <label>Notes
+        <textarea rows="2" spellcheck="false">Taller x-height, lower contrast.</textarea></label>
+      <div class="br-checks">
+        <label><input type="checkbox" checked> Hint the outlines</label>
+        <label><input type="checkbox"> Include composites</label>
+        <label><input type="radio" name="w" checked> Regular</label>
+        <label><input type="radio" name="w"> Bold</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="br-block">
+    <span class="br-label">Tags &amp; alerts</span>
+    <div class="br-row">
+      <span class="br-tag br-yellow">serif</span>
+      <span class="br-tag br-pink">183 glyphs</span>
+      <span class="br-tag br-cyan">kerned</span>
+      <span class="br-tag">1000 upm</span>
+      <span class="br-tag br-black">TTF</span>
+    </div>
+    <div class="br-alert br-yellow"><strong>Heads up.</strong> Accented
+      capitals sit above the em ascent. That is normal and not a defect.</div>
+    <div class="br-alert br-pink"><strong>Refused.</strong> That file is not a
+      TrueType or OpenType font.</div>
+  </div>
+
+  <div class="br-block">
+    <span class="br-label">Cards</span>
+    <div class="br-cards">
+      <div class="br-card br-yellow">
+        <h3>Draw</h3>
+        <p>Describe the letterforms in Python. Nothing is traced, so nothing is
+          approximate.</p>
+        <button class="br-btn br-sm">Open →</button>
+      </div>
+      <div class="br-card br-cyan">
+        <h3>Trace</h3>
+        <p>Feed it a grid of drawn glyphs and it vectorises each cell onto a
+          shared baseline.</p>
+        <button class="br-btn br-sm">Open →</button>
+      </div>
+      <div class="br-card br-pink">
+        <h3>Proof</h3>
+        <p>One big glyph per cell with baseline, x-height and cap guides. Look
+          before you reason.</p>
+        <button class="br-btn br-sm">Open →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="br-block">
+    <span class="br-label">Table</span>
+    <table class="br-table">
+      <thead><tr><th>Face</th><th>Glyphs</th><th>Size</th><th>Built</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>Gravitas Text</td><td>183</td><td>17.9 kB</td><td>2026-07-27</td><td><button class="br-btn br-sm br-yellow">Get</button></td></tr>
+        <tr><td>Sheet Serif</td><td>73</td><td>14.7 kB</td><td>2026-07-26</td><td><button class="br-btn br-sm">Get</button></td></tr>
+        <tr><td>Wobble Hand</td><td>73</td><td>17.6 kB</td><td>2026-07-26</td><td><button class="br-btn br-sm">Get</button></td></tr>
+        <tr><td>Ronin Brush</td><td>73</td><td>57.2 kB</td><td>2026-07-26</td><td><button class="br-btn br-sm">Get</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------- dashboard -->
+<section class="demo demo-dash">
+  <aside class="db-side">
+    <div class="db-brand">Foundry</div>
+    <nav>
+      <a class="on" href="#">Overview</a>
+      <a href="#">Families</a>
+      <a href="#">Builds</a>
+      <a href="#">Proofs</a>
+      <a href="#">Licences</a>
+      <a href="#">Settings</a>
+    </nav>
+    <div class="db-side-foot">
+      <div class="db-quota"><span>Storage</span><span>2.1 / 8 GB</span></div>
+      <div class="db-bar"><i style="width:26%"></i></div>
+    </div>
+  </aside>
+
+  <div class="db-main">
+    <header class="db-top">
+      <h1>Overview</h1>
+      <input type="search" placeholder="Search families, builds…" spellcheck="false">
+      <span class="db-user">AW</span>
+    </header>
+
+    <div class="db-tiles">
+      <div class="db-tile">
+        <span class="db-k">Families</span>
+        <strong>14</strong>
+        <span class="db-d up">+2 this month</span>
+      </div>
+      <div class="db-tile">
+        <span class="db-k">Glyphs drawn</span>
+        <strong>3,481</strong>
+        <span class="db-d up">+183</span>
+      </div>
+      <div class="db-tile">
+        <span class="db-k">Build time</span>
+        <strong>4.7s</strong>
+        <span class="db-d down">−1.2s</span>
+      </div>
+      <div class="db-tile">
+        <span class="db-k">Defects</span>
+        <strong>0</strong>
+        <span class="db-d">30 flagged, all expected</span>
+      </div>
+    </div>
+
+    <div class="db-split">
+      <section class="db-card">
+        <header><h2>Recent builds</h2><span class="db-more">View all</span></header>
+        <table class="db-table">
+          <thead><tr><th>Face</th><th>Branch</th><th class="n">Glyphs</th><th class="n">Size</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Gravitas Text</td><td>main</td><td class="n">183</td><td class="n">17.9 kB</td><td><span class="pill ok">passed</span></td></tr>
+            <tr><td>Sheet Serif</td><td>main</td><td class="n">73</td><td class="n">14.7 kB</td><td><span class="pill ok">passed</span></td></tr>
+            <tr><td>Wobble Hand</td><td>rough</td><td class="n">73</td><td class="n">17.6 kB</td><td><span class="pill warn">specks</span></td></tr>
+            <tr><td>Ronin Brush</td><td>brush</td><td class="n">73</td><td class="n">57.2 kB</td><td><span class="pill ok">passed</span></td></tr>
+            <tr><td>Demo Serif</td><td>template</td><td class="n">7</td><td class="n">2.9 kB</td><td><span class="pill idle">draft</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="db-card">
+        <header><h2>Weight distribution</h2></header>
+        <div class="db-spark">
+          <svg viewBox="0 0 240 64" preserveAspectRatio="none">
+            <polyline points="0,52 24,44 48,47 72,30 96,34 120,18 144,22 168,12 192,16 216,6 240,9"/>
+          </svg>
+        </div>
+        <ul class="db-list">
+          <li><span>Regular</span><span class="n">62%</span></li>
+          <li><span>Medium</span><span class="n">21%</span></li>
+          <li><span>Bold</span><span class="n">12%</span></li>
+          <li><span>Italic</span><span class="n">5%</span></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div id="drop">drop .ttf</div>
+
+<script src="fontkit.js"></script>
+<script src="showcase.js"></script>
+</body>
+</html>
