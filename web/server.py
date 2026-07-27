@@ -124,6 +124,21 @@ class Handler(BaseHTTPRequestHandler):
     def send_json(self, code, obj):
         self.send(code, json.dumps(obj), 'application/json')
 
+    def refuse(self, code, error):
+        """Reject a request whose body we are not going to read.
+
+        Drains what the client is already sending, capped so a declared 10 GB
+        cannot tie us up, then closes rather than leaving a partly-read body on
+        a keep-alive connection.
+        """
+        try:
+            length = int(self.headers.get('Content-Length') or 0)
+        except ValueError:
+            length = 0
+        self.drain(min(max(length, 0), MAX_UPLOAD + 65536))
+        self.close_connection = True
+        return self.send_json(code, {'error': error})
+
     def drain(self, n, chunk=65536):
         """Read and discard n bytes, so a rejected request still gets its
         response instead of a reset connection. A client that gives up
@@ -183,7 +198,23 @@ class Handler(BaseHTTPRequestHandler):
         if unquote(url.path) != '/api/fonts':
             return self.send(404, 'not found')
         if Config.read_only:
-            return self.send_json(403, {'error': 'uploads are disabled'})
+            return self.refuse(403, 'uploads are disabled')
+
+        try:
+            length = int(self.headers.get('Content-Length') or 0)
+        except ValueError:
+            return self.refuse(400, 'bad length')
+        if length <= 0:
+            return self.send_json(400, {'error': 'empty body'})
+        if length > MAX_UPLOAD:
+            return self.refuse(413, 'over %d bytes' % MAX_UPLOAD)
+
+        # The body is read before anything else is judged, because a response
+        # sent while the client is still uploading arrives as a reset
+        # connection rather than as the error it is.
+        body = self.rfile.read(length)
+        if len(body) != length:
+            return self.send_json(400, {'error': 'short read'})
 
         # Reject anything path-shaped outright rather than quietly basenaming
         # it: a caller asking for ../x.ttf has misunderstood the endpoint.
@@ -192,23 +223,6 @@ class Handler(BaseHTTPRequestHandler):
                 or not SAFE_NAME.match(name)
                 or not name.lower().endswith(FONT_EXT)):
             return self.send_json(400, {'error': 'bad filename'})
-
-        try:
-            length = int(self.headers.get('Content-Length') or 0)
-        except ValueError:
-            return self.send_json(400, {'error': 'bad length'})
-        if length <= 0:
-            return self.send_json(400, {'error': 'empty body'})
-        if length > MAX_UPLOAD:
-            # Drain what an honest client is already sending so the response
-            # gets through, but cap it so a declared 10 GB cannot tie us up.
-            self.drain(min(length, MAX_UPLOAD + 65536))
-            self.close_connection = True
-            return self.send_json(413, {'error': 'over %d bytes' % MAX_UPLOAD})
-
-        body = self.rfile.read(length)
-        if len(body) != length:
-            return self.send_json(400, {'error': 'short read'})
         if not body.startswith(FONT_MAGIC):
             return self.send_json(415, {'error': 'not a TrueType/OpenType file'})
 
